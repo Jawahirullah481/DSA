@@ -1,4 +1,4 @@
-package datastructure.BTAndDP.mazeRunner;
+package datastructure.backtracking.mazeRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
