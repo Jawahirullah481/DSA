@@ -1,4 +1,4 @@
-package datastructure.tree.problems.bfs;
+package datastructure.tree.problems;
 
 import datastructure.tree.problems.TreeNode;
 
@@ -7,10 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class AverageOfAllLevels {
-    public List<Double> averageOfLevels(TreeNode root) {
-        List<Double> list = new ArrayList<>();
-
+public class RightSideNodesOfTree {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
         if(root == null) {
             return list;
         }
@@ -19,21 +18,19 @@ public class AverageOfAllLevels {
         queue.offer(root);
 
         while(!queue.isEmpty()) {
+            TreeNode rightMost = queue.peek();
+            list.add(rightMost.val);
+
             int levelSize = queue.size();
-            double sum = 0.0;
             for(int i = 0; i < levelSize; i++) {
                 TreeNode node = queue.poll();
-                sum += node.val;
-
-                if(node.left != null) {
-                    queue.offer(node.left);
-                }
                 if(node.right != null) {
                     queue.offer(node.right);
                 }
+                if(node.left != null) {
+                    queue.offer(node.left);
+                }
             }
-            double average = sum / levelSize;
-            list.add(average);
         }
 
         return list;

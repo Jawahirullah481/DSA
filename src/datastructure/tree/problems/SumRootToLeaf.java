@@ -1,4 +1,4 @@
-package datastructure.tree.problems.bfs;
+package datastructure.tree.problems;
 
 import datastructure.tree.problems.TreeNode;
 

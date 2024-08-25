@@ -1,4 +1,4 @@
-package datastructure.tree.problems.bfs;
+package datastructure.tree.problems;
 
 import java.util.LinkedList;
 import java.util.Queue;
