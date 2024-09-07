@@ -58,9 +58,9 @@ public class Fibonacci {
         int second = 0;
 
         for(int i = 2; i <= n; i++) {
-            int temp = first;
-            first = first + second;
-            second = temp;
+            int curr = first + second;
+            second = first;
+            first = curr;
         }
 
         return first;
