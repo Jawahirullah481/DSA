@@ -12,6 +12,10 @@ public class FrogJump1 {
         2. Based on that also you can change order of for loop
      */
 
+    public static void main(String[] args) {
+        System.out.println(frogJump(9, new int[] {7, 4, 4, 2, 6, 6, 3, 4 }));
+    }
+
     public static int frogJump(int n, int heights[]) {
         // return recBottomToTop(0, 0, heights);
 

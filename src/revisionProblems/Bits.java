@@ -51,6 +51,32 @@ public class Bits {
         // Question 14 : Print All the subsets of array
         printAllSubsets(new int[] {1, 2, 3, 4, 5});
 
+        // Question 15 : Find no of flips to reach goal
+        noOfFlips(10, 7);
+
+    }
+
+    private static void noOfFlips(int start, int goal) {
+        /*
+            When i xor start with goal, then i will get the number which has 1 wherever different bits are available
+            in start and goal.
+
+            Example : start = 10, goal = 7;
+            10 ^ 7 = 1010 ^ 0111 = 1101 => 13
+
+            if I count no.of.set bits in 13, then i can find no of flips needed.
+         */
+        int xor = start ^ goal;
+        int flips = 0;
+
+        while(xor > 0) {
+            if((xor & 1) == 1) {
+                flips++;
+            }
+            xor = xor >> 1;
+        }
+
+        System.out.println("No of flips taken : " + flips);
     }
 
     private static void printAllSubsets(int[] arr) {
