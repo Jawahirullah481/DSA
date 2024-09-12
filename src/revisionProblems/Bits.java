@@ -54,6 +54,47 @@ public class Bits {
         // Question 15 : Find no of flips to reach goal
         noOfFlips(10, 7);
 
+        // Question 16 : Find consistent string (LC : https://leetcode.com/problems/count-the-number-of-consistent-strings/description/)
+        countConsistenStrings("ab", new String[] {"ad","bd","aaab","baa","badab"});
+
+    }
+
+    private static void countConsistenStrings(String allowed, String[] words) {
+        /*
+            Note : In this problem we use binary number to determine whether the character exists or not
+            Thought Process : make every available character position in bits as 1.
+            Then, get every single word and get every single character from that word.
+            Then check, if the position of that character is 0 or 1.
+            If 0, then it's not consistent.
+
+            Example :
+            =========
+            1. allowed = "abc", then bits become 00000000000000000000000111
+            2. char c = 'd', then when you |(or) with bits, the result is 00000000000000000000001111
+
+            both are not same, then it's not consistent(means, that character is not available in 'allowed')
+         */
+        int count = 0;
+        int bits = 0;
+
+        for(char c : allowed.toCharArray()) {
+            bits = bits | (1 << c - 'a');
+        }
+
+        for(String word : words) {
+            boolean consistent = true;
+            for(char c : word.toCharArray()) {
+                if(bits != (bits | (1 << c - 'a'))) {
+                    consistent = false;
+                    break;
+                }
+            }
+            if(consistent) {
+                count++;
+            }
+        }
+
+        System.out.println("Number of consistent words : " + count);
     }
 
     private static void noOfFlips(int start, int goal) {
