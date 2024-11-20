@@ -11,13 +11,13 @@ public class Set9 {
         // makeAdjacentToZero();
 
         // Problem 2
-        // replaceElementWithLargestToItsRight();
+         replaceElementWithLargestToItsRight();
 
         // Problem 3
         // findEquilibriumIndex();
 
         // Problem 4
-        floodFilledAlgorithm();
+        // floodFilledAlgorithm();
     }
 
     @Description("Problem 1")

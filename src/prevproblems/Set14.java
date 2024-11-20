@@ -21,27 +21,28 @@ public class Set14 {
 
     @Description("Problem 1")
     public static void convertNumToAlpha() {
-        /*
-            Problem statment :
-            ==================
-            Input | Output
-            ---------------
-             1    |  A
-             26   |  Z
-             27   |  AA
-             676  |  ZZZ
-         */
+    /*
+        Problem statement:
+        ==================
+        Input | Output
+        ---------------
+         1    |  A
+         26   |  Z
+         27   |  AA
+         676  |  ZZZ
+     */
 
-        int n = 676;
-        String res = "";
-        do {
-            int temp = n - 1;
-            temp = temp % 26;
-            res += ((char)('A' + temp));
-            n = n / 26;
-        } while (n > 1);
+        int n = 676; // Example input
+        StringBuilder res = new StringBuilder();
 
-        System.out.println("Equivalent alpha : " + res);
+        while (n > 0) {
+            n--; // To handle 1-based indexing (e.g., A=1, Z=26)
+            int temp = n % 26;
+            res.append((char) ('A' + temp)); // Append the corresponding character
+            n /= 26; // Reduce n for the next iteration
+        }
+
+        System.out.println("Equivalent alpha: " + res.reverse().toString());
     }
 
     @Description("Problem 3")
