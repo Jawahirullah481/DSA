@@ -63,7 +63,7 @@ public class Set2 {
             1. Take counter to keep track of whether closing bracket contains equivalent open bracket.
             2. When you see open bracket, then count++.
             3. When you see close bracket, then count--.
-            4. if count < 0, that means there is extra close bracket available or there is not
+            4. if count < 0, that means there is extra close bracket available or there is no
                 equivalent open bracket for that close bracket. In that time, remove that close bracket
                 and decrement count by 1 and again traverse next letter.
             5. Again we have to do for reverse order to know extra opening parenthesis.

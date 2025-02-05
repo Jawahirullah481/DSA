@@ -22,7 +22,7 @@ public class MazeRunner {
     }
 
     protected int countAllWays(int row, int col) {
-        if(row == maze.length - 1 || col == maze[0].length - 1) {
+        if(row == maze.length - 1 && col == maze[0].length - 1) {
             return 1;
         }
 

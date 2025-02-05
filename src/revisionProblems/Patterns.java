@@ -3,20 +3,20 @@ package revisionProblems;
 public class Patterns {
 
     public static void main(String[] args) {
-       //  pattern1();
-       //  pattern2();
-       //  pattern3();
-       //  pattern4();
-       //  pattern5();
-       //  pattern6();
-       //  pattern7();
-       //  pattern8();
-       //  pattern9();
+         pattern1();
+         pattern2();
+         pattern3();
+         pattern4();
+         pattern5();
+         pattern6();
+         pattern7();
+         pattern8();
+         pattern9();
        //  pattern10(); 12 not solved
-       //  pattern11();
-       //  pattern12();
-       //  pattern13();
-       // pattern14();
+         pattern11();
+         pattern12();
+         pattern13();
+        pattern14();
         pattern15();
     }
 
@@ -30,6 +30,9 @@ public class Patterns {
          4 3 3 3 3 3 4
          4 4 4 4 4 4 4
          */
+
+        System.out.println("\nPATTERN 15 : \n");
+
         int n = 4;
 
         for(int i = 1; i < 2 * n; i++) {
@@ -85,6 +88,8 @@ public class Patterns {
 
          */
 
+        System.out.println("\nPATTERN 13 : \n");
+
         int n = 5;
 
         // Upper triangle
@@ -130,6 +135,7 @@ public class Patterns {
 
          */
 
+        System.out.println("\nPATTERN 12 : \n");
 
         int n = 5;
         for(int i = 1; i <= n; i++) {
@@ -145,6 +151,9 @@ public class Patterns {
     }
 
     private static void pattern11() {
+
+        System.out.println("\nPATTERN 11 : \n");
+
         int n = 5;
         for(int i = 0; i < n; i++) {
             for(int j = 1; j <= (2 * n - 1); j++) {
@@ -188,6 +197,8 @@ public class Patterns {
 
          */
 
+        System.out.println("\nPATTERN 9 : \n");
+
         int n = 5;
         for(int i = 0; i < n; i++) {
             for(int sp = 0; sp < i; sp++) {
@@ -219,6 +230,8 @@ public class Patterns {
 
          */
 
+        System.out.println("\nPATTERN 8 : \n");
+
         int n = 5;
         for(int i = 1; i <= n; i++) {
             for(int sp = 1; sp <= (n - i); sp++) {
@@ -232,6 +245,9 @@ public class Patterns {
     }
 
     private static void pattern7() {
+
+        System.out.println("\nPATTERN 7 : \n");
+
         int n = 5;
         for(int i = 0; i < n; i++) {
             for(int j = 1; j <= n; j++) {
@@ -246,6 +262,9 @@ public class Patterns {
     }
 
     private static void pattern6() {
+
+        System.out.println("\nPATTERN 6: \n");
+
         int n = 5;
         for(int i = 1; i <= n; i++) {
             for(int j = 1; j <=n; j++) {
@@ -286,6 +305,9 @@ public class Patterns {
 
 
          */
+
+        System.out.println("\nPATTERN 5 : \n");
+
         int n = 6;
         for(int i = 1; i <= (2 * n); i++) {
             int columns = (i <= n) ? i : ((2 * n) - i);
@@ -297,6 +319,9 @@ public class Patterns {
     }
 
     private static void pattern4() {
+
+        System.out.println("\nPATTERN 4 : \n");
+
         int n = 5;
         for(int i = 1; i <= n; i++) {
             for(int j = 1; j <= i; j++) {
@@ -307,6 +332,9 @@ public class Patterns {
     }
 
     private static void pattern3() {
+
+        System.out.println("\nPATTERN 3 : \n");
+
         int n = 5;
         for(int i = 0; i < n; i++) {
             for(int j = n - i; j > 0; j--) {
@@ -317,6 +345,9 @@ public class Patterns {
     }
 
     private static void pattern2() {
+
+        System.out.println("\nPATTERN 2 : \n");
+
         int n = 5;
         for(int i = 1; i <= n; i++) {
             for(int j = 1; j <= i; j++) {
@@ -327,6 +358,9 @@ public class Patterns {
     }
 
     private static void pattern1() {
+
+        System.out.println("\nPATTERN 1 : \n");
+
         int row = 5; int col = 6;
         for(int i = 1; i <= row; i++) {
             for(int j = 1; j <= col; j++) {

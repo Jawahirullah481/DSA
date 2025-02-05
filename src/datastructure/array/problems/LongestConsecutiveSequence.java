@@ -34,14 +34,13 @@ public class LongestConsecutiveSequence {
 
             if(arr[i] == arr[prev] + 1) {
                 count++;
-                prev = i;
             } else {
                 if(count > max) {
                     max = count;
                 }
                 count = 1;
-                prev = i;
             }
+            prev = i;
         }
 
         if(count > max) {

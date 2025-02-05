@@ -159,9 +159,9 @@ public class Sorting {
         }
 
         int mid = arr.length / 2;
-        int[] leftSorted = Arrays.copyOfRange(arr, 0, mid);
-        int[] rightSorted= Arrays.copyOfRange(arr, mid, arr.length);
-        return merge(mergeSort(leftSorted), mergeSort(rightSorted));
+        int[] leftHalf = Arrays.copyOfRange(arr, 0, mid);
+        int[] rightHalf = Arrays.copyOfRange(arr, mid, arr.length);
+        return merge(mergeSort(leftHalf), mergeSort(rightHalf));
     }
 
     static int[] merge(int[] arr1, int[] arr2) {

@@ -55,11 +55,11 @@ public class Bits {
         noOfFlips(10, 7);
 
         // Question 16 : Find consistent string (LC : https://leetcode.com/problems/count-the-number-of-consistent-strings/description/)
-        countConsistenStrings("ab", new String[] {"ad","bd","aaab","baa","badab"});
+        countConsistentStrings("ab", new String[] {"ad","bd","aaab","baa","badab"});
 
     }
 
-    private static void countConsistenStrings(String allowed, String[] words) {
+    private static void countConsistentStrings(String allowed, String[] words) {
         /*
             Note : In this problem we use binary number to determine whether the character exists or not
             Thought Process : make every available character position in bits as 1.

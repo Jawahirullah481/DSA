@@ -51,9 +51,8 @@ public class MaximumSumInSubArray {
         int i = 0;
         while(i < arr.length) {
             sum += arr[i++];
-            if(sum > maxSum) {
-                maxSum = sum;
-            }
+
+            maxSum = Math.max(sum, maxSum);
 
             // NOTE
             if(sum < 0) {

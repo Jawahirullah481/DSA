@@ -43,12 +43,24 @@ public class Set6 {
         int day1 = Integer.parseInt(d1.split(" ")[0]);
         int day2 = Integer.parseInt(d2.split(" ")[0]);
 
-        if(year2 < year1 || month2 < month1 || day2 < day1) {
+        // Compare years
+        if (year2 > year1) {
             return true;
+        } else if (year2 < year1) {
+            return false;
         }
 
-        return false;
+        // Compare months
+        if (month2 > month1) {
+            return true;
+        } else if (month2 < month1) {
+            return false;
+        }
+
+        // Compare days
+        return day2 > day1;
     }
+
 
     @Description("Problem 2")
     public static void findMagicNumberOrNot(int originalNumber) {
