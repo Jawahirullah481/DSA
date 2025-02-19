@@ -25,6 +25,9 @@ public class Problem16PartitionMinDifference {
         }
 
         solution = minDifferenceMemoization(arr, n, 0, total, n - 1, dp);
+
+        // Tabulation solution
+        solution = minDifferenceTabulation(arr, n, total);
     }
 
     public static int minDifferenceRecursion(int[] arr, int n, int sum, int total, int index) {
@@ -56,5 +59,39 @@ public class Problem16PartitionMinDifference {
 
         dp[index][sum] = Math.min(take, notTake);
         return dp[index][sum];
+    }
+
+    public static int minDifferenceTabulation(int[] arr, int n, int sum) {
+        boolean[][] dp = new boolean[n][sum + 1];
+
+        for(int i = 0; i < n; i++) {
+            dp[i][0] = true;
+        }
+
+        if(arr[0] <= sum) {
+            dp[0][arr[0]] = true;
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 1; j < sum + 1; j++) {
+                boolean take = j - arr[i] >= 0 ? dp[i - 1][j - arr[i]] : false;
+                boolean notTake = dp[i - 1][j];
+
+                dp[i][j] = take || notTake;
+            }
+        }
+
+        int minDifference = Integer.MAX_VALUE;
+
+        for(int i = 0; i <= sum / 2; i++) {
+            if(dp[n - 1][i]) {
+                int num1 = i;
+                int num2 = sum - num1;
+                minDifference = Math.min(minDifference, Math.abs(num1 - num2));
+            }
+        }
+
+        return minDifference;
+
     }
 }

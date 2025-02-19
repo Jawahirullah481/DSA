@@ -19,6 +19,9 @@ public class Problem17CountSubsetsWithSumK {
         }
         solution = findWaysMemoization(num, tar, num.length - 1, dp);
 
+        // Tabulation solution
+        solution = findWaysTabulation(num, tar, dp);
+
     }
 
     public static int findWaysRecursion(int[] num, int target, int index) {
@@ -54,5 +57,26 @@ public class Problem17CountSubsetsWithSumK {
 
         dp[index][target] = take + notTake;
         return dp[index][target];
+    }
+
+    public static int findWaysTabulation(int[] num, int target, int[][] dp) {
+        for(int i = 0; i < num.length; i++) {
+            dp[i][0] = 1;
+        }
+
+        if(num[0] <= target) {
+            dp[0][num[0]] = 1;
+        }
+
+        for(int i = 1; i < num.length; i++) {
+            for(int j = 1; j < target + 1; j++) {
+                int take = j - num[i] >= 0 ? dp[i - 1][j - num[i]] : 0;
+                int notTake = dp[i - 1][j];
+
+                dp[i][j] = take + notTake;
+            }
+        }
+
+        return dp[num.length - 1][target];
     }
 }

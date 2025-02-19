@@ -18,6 +18,9 @@ public class Problem4FrogJumpKSteps {
         Arrays.fill(dp, -1);
         solution = minimumEnergyMemoization(n - 1, heights, k, dp);
 
+        // Tabulation solution
+        solution = frogTabulation(n, heights, dp, k);
+
         System.out.println(solution);
     }
 
@@ -67,5 +70,23 @@ public class Problem4FrogJumpKSteps {
 
         dp[index] = minSteps;
         return dp[index];
+    }
+
+    public static int frogTabulation(int n, int heights[], int[] dp, int k) {
+        dp[0] = 0;
+
+        for(int ind = 1; ind < n; ind++) {
+            int minSteps = Integer.MAX_VALUE;
+            for(int i = 1; i <= k; i++) {
+                if(ind - i >= 0) {
+                    int steps = Math.abs(heights[ind] - heights[ind - i]) + dp[ind - i];
+                    minSteps = Math.min(minSteps, steps);
+                }
+            }
+
+            dp[ind] = minSteps;
+        }
+
+        return dp[n -1];
     }
 }

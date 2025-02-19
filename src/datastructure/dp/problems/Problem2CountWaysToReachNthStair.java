@@ -22,6 +22,9 @@ public class Problem2CountWaysToReachNthStair {
         Arrays.fill(dp, -1);
         solution = countWaysMemoization(stairs, dp);
 
+        // Tabulation solution
+        solution = countWaysTabulation(stairs, dp);
+
         System.out.println(solution);
     }
 
@@ -53,5 +56,24 @@ public class Problem2CountWaysToReachNthStair {
 
         dp[stairIndex] = countWaysMemoization(stairIndex - 1, dp) + countWaysMemoization(stairIndex - 2, dp);
         return dp[stairIndex];
+    }
+
+    public static int countWaysTabulation(int stairs, int[] dp) {
+
+        if(stairs <= 1) {
+            return 1;
+        }
+
+        dp[0] = 1; dp[1] = 1;
+
+
+        for(int stair = 2; stair <= stairs; stair++) {
+            int oneStep = dp[stair - 1];
+            int twoStep = dp[stair - 2];
+
+            dp[stair] = oneStep + twoStep;
+        }
+
+        return dp[stairs];
     }
 }

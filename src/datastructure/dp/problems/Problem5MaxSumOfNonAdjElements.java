@@ -16,6 +16,9 @@ public class Problem5MaxSumOfNonAdjElements {
         Arrays.fill(dp, - 1);
         solution = maxSumMemoization(nums, nums.size() - 1, dp);
 
+        // Tabulation solution
+        solution = maxSumTabulation(nums, dp);
+
         System.out.println(solution);
     }
 
@@ -46,5 +49,21 @@ public class Problem5MaxSumOfNonAdjElements {
 
         dp[index] = Math.max(take, notTake);
         return dp[index];
+    }
+
+    public static int maxSumTabulation(List<Integer> nums, int[] dp) {
+        dp[0] = nums.get(0);
+
+        for(int index = 1; index < nums.size(); index++) {
+            int take = nums.get(index);
+            if(index - 2 >= 0)
+                take = take + dp[index - 2];
+
+            int notTake = 0 + dp[index - 1];
+
+            dp[index] = Math.max(take, notTake);
+        }
+
+        return dp[nums.size() - 1];
     }
 }

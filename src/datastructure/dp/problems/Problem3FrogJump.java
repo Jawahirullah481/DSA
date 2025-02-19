@@ -17,6 +17,9 @@ public class Problem3FrogJump {
         Arrays.fill(dp, -1);
         solution = minimumEnergyMemoization(n - 1, heights, dp);
 
+        // Tabulation solution
+        solution = frogTabulation(n - 1, heights, dp);
+
         System.out.println(solution);
     }
 
@@ -71,5 +74,21 @@ public class Problem3FrogJump {
 
         dp[index] = Math.min(oneStep, twoStep);
         return dp[index];
+    }
+
+    public static int frogTabulation(int n, int heights[], int[] dp) {
+        dp[0] = 0;
+
+        for(int ind = 1; ind < n; ind++) {
+            int oneStep = Math.abs(heights[ind] - heights[ind - 1]) + dp[ind - 1];
+            int twoStep = Integer.MAX_VALUE;
+            if(ind > 1) {
+                twoStep = Math.abs(heights[ind] - heights[ind - 2]) + dp[ind - 2];
+            }
+
+            dp[ind] = Math.min(oneStep, twoStep);
+        }
+
+        return dp[n -1];
     }
 }
