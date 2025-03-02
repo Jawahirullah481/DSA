@@ -24,6 +24,9 @@ public class Problem20MinimumElements {
 
         solution = minElementsMemoization(num, x, num.length - 1, dp);
         solution = solution == Integer.MAX_VALUE ? -1 : solution;
+
+        // Tabulation solution
+        solution = minElementsTabulation(num, x, dp);
     }
 
 
@@ -64,5 +67,30 @@ public class Problem20MinimumElements {
         int take2 = 1 + minElementsMemoization(num, x - num[index], index, dp);
 
         return dp[index][x] = Math.min(notTake, Math.min(take1, take2));
+    }
+
+    public static int minElementsTabulation(int[] num, int x, int[][] dp) {
+        for(int i = 0; i <= x; i++) {
+            if(i % num[0] == 0) {
+                dp[0][i] = i / num[0];
+            } else {
+                dp[0][i] = Integer.MAX_VALUE;
+            }
+        }
+
+        for(int i = 1; i < num.length; i++) {
+            for(int j = 0; j <= x; j++) {
+                int notTake = dp[i - 1][j];
+                int take = Integer.MAX_VALUE;
+                if(j - num[i] >= 0)
+                    take = 1 + dp[i][j - num[i]];
+
+                dp[i][j] = Math.min(notTake, take);
+            }
+        }
+
+        int n =  dp[num.length - 1][x];
+        if(n >= (int) Math.pow(10, 9)) return - 1;
+        return n;
     }
 }

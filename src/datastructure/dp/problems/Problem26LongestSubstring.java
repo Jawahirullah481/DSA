@@ -23,6 +23,10 @@ public class Problem26LongestSubstring {
                 Arrays.fill(row, -1);
             }
         }
+
+        // Tabulation solution
+        int[][] dp1 = new int[n + 1][m + 1];
+        solution = lcsTabulation(str1, str2, dp1);
     }
 
     public static int lcsRecursion(String str1, String str2, int ind1, int ind2, int count) {
@@ -66,5 +70,21 @@ public class Problem26LongestSubstring {
         int skip2 = lcsMemoization(str1, str2, ind1 + 1, ind2, 0, dp);
 
         return dp[ind1][ind2][count] = Math.max(currentCount, Math.max(skip1, skip2));
+    }
+
+    public static int lcsTabulation(String str1, String str2, int[][] dp) {
+        int n = str1.length(), m = str2.length();
+        int maxLength = 0;
+
+        for(int i = 1; i <= n; i++) {
+            for(int j = 1; j <= m; j++) {
+                if(str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    maxLength = Math.max(dp[i][j], maxLength);
+                }
+            }
+        }
+
+        return maxLength;
     }
 }

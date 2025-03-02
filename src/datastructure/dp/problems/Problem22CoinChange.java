@@ -19,6 +19,10 @@ public class Problem22CoinChange {
         }
 
         solution =  minElementsMemoization(denominations, value, denominations.length - 1, dp);
+
+        // Tabulation solution
+        dp = new int[denominations.length][value + 1];
+        solution = minElementsTabulation(denominations, value, dp);
     }
 
     public static int countCoinsRecursion(int[] num, int x, int index) {
@@ -55,5 +59,25 @@ public class Problem22CoinChange {
         int take1 = minElementsMemoization(num, x - num[index], index, dp);
 
         return dp[index][x] = notTake + take1;
+    }
+
+    public static int minElementsTabulation(int[] num, int x, int[][] dp) {
+        for(int amount = 0; amount <= x; amount++) {
+            if(amount % num[0] == 0) dp[0][amount] = 1;
+        }
+
+        for(int i = 1; i < num.length; i++) {
+            for(int j = 0; j <= x; j++) {
+
+                int notTake = dp[i - 1][j];
+                int take = 0;
+                if(j - num[i] >= 0)
+                    take = dp[i][j - num[i]];
+
+                dp[i][j] = notTake + take;
+            }
+        }
+
+        return dp[num.length - 1][x];
     }
 }

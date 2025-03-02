@@ -20,6 +20,10 @@ public class Problem24RodCutting {
 
         solution = curMemoization(price, rodLength, rodLength, dp);
 
+        // Tabulation solution
+        dp = new int[rodLength][rodLength + 1];
+        solution = cutTabulation(price, rodLength, dp);
+
     }
 
     // NOTE : The task is to cut all the length
@@ -63,5 +67,27 @@ public class Problem24RodCutting {
         }
 
         return dp[rodLength][pieceLength] = Math.max(take, notTake);
+    }
+
+    public static int cutTabulation(int[] price, int length, int[][] dp) {
+
+        for(int len = 0; len <= length; len++) {
+            dp[0][len] = len * price[0];
+        }
+
+        for(int i = 1; i < length; i++) {
+            for(int j = 0; j <= length; j++) {
+                int notCut = dp[i - 1][j];
+                int cut = Integer.MIN_VALUE;
+                int piece = i + 1;
+                if(piece <= j) {
+                    cut = price[i] + dp[i][j - piece];
+                }
+
+                dp[i][j] = Math.max(cut, notCut);
+            }
+        }
+
+        return dp[length - 1][length];
     }
 }

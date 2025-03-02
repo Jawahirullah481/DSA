@@ -18,6 +18,10 @@ public class Problem25LongestCommonSubsequence {
             Arrays.fill(dp[i], -1);
         }
         solution = lcsMemoization(s, t, 0, 0, dp);
+
+        // Tabulation solution
+        dp = new int[s.length()][t.length()];
+        solution = lcsTabulation(s, t, dp);
     }
 
     public static int lcsRecursion(String s, String t, int ind1, int ind2) {
@@ -51,5 +55,28 @@ public class Problem25LongestCommonSubsequence {
 
         return dp[ind1][ind2] = Math.max(lcsMemoization(s, t, ind1 + 1, ind2, dp),
                 lcsMemoization(s, t, ind1, ind2 + 1, dp));
+    }
+
+    public static int lcsTabulation(String s, String t, int[][] dp) {
+        for(int i = 0; i < s.length(); i++) {
+            for(int j = 0; j < t.length(); j++) {
+                if(s.charAt(i) == t.charAt(j)) {
+                    dp[i][j] = 1 + (((i - 1 >= 0 && j - 1 >= 0)) ? dp[i - 1][j - 1] : 0);
+                } else {
+                    int top = 0, left = 0;
+                    if(i - 1 >= 0) {
+                        top = dp[i - 1][j];
+                    }
+
+                    if(j - 1 >= 0) {
+                        left = dp[i][j - 1];
+                    }
+
+                    dp[i][j] = Math.max(top, left);
+                }
+            }
+        }
+
+        return dp[s.length() - 1][t.length() - 1];
     }
 }

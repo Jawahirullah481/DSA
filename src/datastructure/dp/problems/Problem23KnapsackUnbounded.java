@@ -22,6 +22,10 @@ public class Problem23KnapsackUnbounded {
         }
 
         solution = knapsackMemoization(n, w, profit, weight, n - 1, 0, dp);
+
+        // Tabulation solution
+        dp = new int[n][w + 1];
+        solution = knapSackTabulation(n, w, profit, weight, dp);
     }
 
     /*
@@ -147,6 +151,27 @@ public class Problem23KnapsackUnbounded {
         }
 
         return dp[index][myWeight][myProfit] = Math.max(notTake, take);
+    }
+
+    public static int knapSackTabulation(int n, int w, int[] profit, int[] weight, int[][] dp) {
+        for(int wght = 0; wght <= w; wght++) {
+            int itemsGrabbed = wght / weight[0];
+            dp[0][wght] = itemsGrabbed * profit[0];
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j <= w; j++) {
+                int notTake = dp[i - 1][j];
+                int take = 0;
+                if(j - weight[i] >= 0) {
+                    take = profit[i] + dp[i][j - weight[i]];
+                }
+
+                dp[i][j] = Math.max(notTake, take);
+            }
+        }
+
+        return dp[n - 1][w];
     }
 
 }
