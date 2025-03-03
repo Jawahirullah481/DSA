@@ -18,6 +18,10 @@ public class Problem40BuySellStock6 {
         }
 
         solution = maxProfitMemoization(prices.length, prices, 0, 0, dp, fee);
+
+        // Tabulation
+        int[][] dp1 = new int[prices.length][2];
+        solution = maxProfitTabulation(prices.length, prices, dp, fee);
     }
 
     public static int maxProfitMemoization(int n, int[] values, int index, int bought, int[][] dp, int fee) {
@@ -41,5 +45,29 @@ public class Problem40BuySellStock6 {
         int notBuy = maxProfitMemoization(n, values, index + 1, bought, dp, fee);
 
         return dp[index][bought] = Math.max(buy, notBuy);
+    }
+
+    public static int maxProfitTabulation(int n, int[] values, int[][] dp, int fee) {
+        if(fee <= values[n - 1]) {
+            dp[n - 1][1] = values[n - 1] - fee;
+        }
+
+        for(int day = n - 2; day >= 0; day--) {
+            for(int hasBought = 0; hasBought <= 1; hasBought++) {
+                if(hasBought == 1) {
+                    int sell = values[day] - fee + dp[day + 1][0];
+                    int notSell = dp[day + 1][1];
+
+                    dp[day][hasBought] = Math.max(sell, notSell);
+                } else {
+                    int buy = -values[day] + dp[day + 1][1];
+                    int notBuy = dp[day + 1][0];
+
+                    dp[day][hasBought] = Math.max(buy, notBuy);
+                }
+            }
+        }
+
+        return dp[0][0];
     }
 }

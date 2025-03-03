@@ -19,6 +19,9 @@ public class Problem35BuySellStock {
         }
 
         solution = maxProfitMemoization(prices, 0, 0, dp);
+
+        // Optimal solution
+        solution = maxProfitTabulation(prices);
     }
 
     public static int maxProfitRecursion(ArrayList<Integer> prices, boolean bought, int index) {
@@ -50,6 +53,22 @@ public class Problem35BuySellStock {
         }
 
         return dp[index][bought] = Math.max(-prices.get(index) + maxProfitMemoization(prices, 1, index + 1, dp), maxProfitMemoization(prices, 0, index + 1, dp));
+
+    }
+
+
+    public static int maxProfitTabulation(ArrayList<Integer> prices) {
+
+        int min = prices.get(0);
+        int maxProfit = 0;
+
+        for(int day = 1; day < prices.size(); day++) {
+            int profit = -min + prices.get(day);
+            maxProfit = Math.max(profit, maxProfit);
+            min = Math.min(min, prices.get(day));
+        }
+
+        return maxProfit;
 
     }
 }

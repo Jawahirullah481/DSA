@@ -18,6 +18,10 @@ public class Problem36BuySelllStock2 {
         }
 
         solution = maxProfitMemoization(n, values, 0, 0, dp);
+
+        // Tabulation solution
+        long[][] dp1 = new long[n][2];
+        solution = maxProfitTabulation(n, values, dp1);
     }
 
     public static long maxProfitRecursion(int n, long[] values, int index, boolean bought) {
@@ -60,5 +64,29 @@ public class Problem36BuySelllStock2 {
         long notBuy = maxProfitMemoization(n, values, index + 1, bought, dp);
 
         return dp[index][bought] = Math.max(buy, notBuy);
+    }
+
+    public static long maxProfitTabulation(int n, long[] values, long[][] dp) {
+        if(n <= 1) return 0;
+
+        dp[n - 1][1] = values[n - 1];
+
+        for(int i = n - 2; i >= 0; i--) {
+            for(int j = 0; j <= 1; j++) {
+                if(j == 1) {
+                    long sell = values[i] + dp[i + 1][0];
+                    long notSell = dp[i + 1][1];
+
+                    dp[i][j] = Math.max(sell, notSell);
+                } else {
+                    long buy = -values[i] + dp[i + 1][1];
+                    long notBuy = dp[i + 1][0];
+
+                    dp[i][j] = Math.max(buy, notBuy);
+                }
+            }
+        }
+
+        return dp[0][0];
     }
 }
