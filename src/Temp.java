@@ -1,93 +1,99 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class Temp {
 
     public static void main(String[] args) {
-        Temp temp = new Temp();
-        int[][] grid = {{2,1,1},{1,1,1},{0,1,2}};
-
-        int time = temp.orangesRotting(grid);
-        System.out.println("MIN TIME : " + time);
+        String[] words = { "baa", "abcd", "abca", "cab", "cad" };
+        System.out.println(findOrder(words));
     }
 
-    public int orangesRotting(int[][] grid) {
+    public static String findOrder(String[] words) {
 
-        int freshCount = 0;
+        // 1.
+        Set<Character> set = new HashSet<>();
 
-        for(int i = 0; i < grid.length; i++) {
-            for(int j = 0; j < grid[0].length; j++) {
-                if(grid[i][j] == 1) {
-                    freshCount++;
-                }
+        for(String word : words) {
+            for(Character letter : word.toCharArray()) {
+                set.add(letter);
             }
         }
 
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        // 2.
+        Map<Integer, Character> indexMap = new HashMap<>();
+        Map<Character, Integer> charMap = new HashMap<>();
 
-        int minTime = Integer.MAX_VALUE;
-        int rotten = 0;
-
-        if(freshCount == 0) {
-            return 0;
+        int indx = 0;
+        for(Character c : set) {
+            indexMap.put(indx, c);
+            charMap.put(c, indx);
+            indx++;
         }
 
-        for(int i = 0; i < grid.length; i++) {
-            for(int j = 0; j < grid[0].length; j++) {
-                // If it is rotten, then rot neighbour nodes
-                if(!visited[i][j] && grid[i][j] == 2) {
-                    int[] res = bfsRot(grid, visited, new Node(i, j, 0));
-                    minTime = Math.min(res[0], minTime);
-                    rotten += res[1];
+        // 3.
+        int n = set.size();
+
+        List<List<Integer>> adjList = new ArrayList<>();
+        for(int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<>());
+        }
+
+        // 4.
+        for(int i = 1; i < words.length; i++) {
+            String word1 = words[i - 1];
+            String word2 = words[i];
+
+            boolean hasFoundDiff = false;
+            for(int j = 0; j < Math.min(word1.length(), word2.length()); j++) {
+                char c1 = word1.charAt(j);
+                char c2 = word2.charAt(j);
+
+                if(c1 != c2) {
+                    hasFoundDiff = true;
+                    adjList.get(charMap.get(c1)).add(charMap.get(c2));
+                    break;
                 }
+            }
+
+            if(!hasFoundDiff && word1.length() > word2.length()) {
+                return "";
             }
         }
 
-        return rotten == freshCount ? minTime : -1;
+        // 5.
+        boolean[] visited = new boolean[adjList.size()];
+        boolean[] pathVisited = new boolean[adjList.size()];
+        String ans = "";
 
-    }
-
-    public int[] bfsRot(int[][] grid, boolean[][] visited, Node node) {
-        int time = 0;
-        int numberOfOrangeRotten = 0;
-
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(node);
-        visited[node.x][node.y] = true;
-
-        while(!queue.isEmpty()) {
-            Node n = queue.poll();
-            time = n.level;
-            int[][] directions = { {-1, 0}, {0, 1}, {1, 0}, {0, -1} };
-
-            for(int[] direction : directions) {
-                int nextX = n.x + direction[0];
-                int nextY = n.y + direction[1];
-
-                if(nextX >= 0 && nextY >= 0 && nextX < grid.length && nextY < grid[0].length
-                        && !visited[nextX][nextY] && grid[nextX][nextY] == 1) {
-                    grid[nextX][nextY] = 2;
-                    numberOfOrangeRotten++;
-                    queue.add(new Node(nextX, nextY, time + 1));
-                    visited[nextX][nextY] = true;
-                }
-
+        for(int node = 0; node < adjList.size(); node++) {
+            if(!visited[node]) {
+                ans += dfs(node, visited, pathVisited, adjList, indexMap, charMap);
             }
         }
 
-        return new int[] {time, numberOfOrangeRotten};
+        if(ans.length() != set.size()) {
+            return "";
+        }
+
+        return new StringBuilder(ans).reverse().toString();
+
     }
 
-}
+    public static String dfs(int node, boolean[] visited, boolean[] pathVisited, List<List<Integer>> adjList, Map<Integer, Character> indexMap, Map<Character, Integer> charMap) {
 
-class Node {
-    int x;
-    int y;
-    int level;
+        visited[node] = true;
+        pathVisited[node] = true;
 
-    Node(int x, int y, int level) {
-        this.x = x;
-        this.y = y;
-        this.level = level;
+        String ans = "";
+        for(int neighbor : adjList.get(node)) {
+            if(!visited[neighbor]) {
+                ans += dfs(neighbor, visited, pathVisited, adjList, indexMap, charMap);
+            } else if (pathVisited[neighbor]) {
+                return "";
+            }
+        }
+
+        pathVisited[node] = false;
+        return indexMap.get(node) + ans;
+
     }
 }
