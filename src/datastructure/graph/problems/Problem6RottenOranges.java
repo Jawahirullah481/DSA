@@ -57,6 +57,7 @@ public class Problem6RottenOranges {
         while(!queue.isEmpty()) {
             int size = queue.size();
 
+            // We use inner for loop for simultaneous process
             for(int i = 0; i < size; i++) {
                 Node node = queue.poll();
 

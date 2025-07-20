@@ -3,6 +3,17 @@ package datastructure.graph.problems;
 import java.util.*;
 
 public class Problem17TopoSortBFS {
+
+    /*
+        Thought Process :
+        ------------------
+        If a ---> b (a is directing b), then a is an ancestor of b, and a should come before b.
+
+        Hence,
+        Putting b when its indegree reaches 0 is something similar to the logic
+        "I have sent all my ancestors before. So, now I have no ancestor. Hence, I need to go into the queue".
+        
+     */
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         List<List<Integer>> adjList = new ArrayList<>();
         for(int i = 0; i < numCourses; i++) {
