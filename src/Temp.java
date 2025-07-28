@@ -3,97 +3,105 @@ import java.util.*;
 class Temp {
 
     public static void main(String[] args) {
-        String[] words = { "baa", "abcd", "abca", "cab", "cad" };
-        System.out.println(findOrder(words));
+        Temp t = new Temp();
+        int[][] edges = {{3,5,4},{0,5,10},{1,0,2},{4,0,6},{2,3,5},{3,1,1},{4,2,2},{3,0,6},{5,2,7},{4,5,6},{0,2,9},{2,1,4}};
+
+        boolean[] answer = t.findAnswer(6, edges);
+        System.out.println(Arrays.toString(answer));
     }
 
-    public static String findOrder(String[] words) {
-
+    public boolean[] findAnswer(int n, int[][] edges) {
         // 1.
-        Set<Character> set = new HashSet<>();
-
-        for(String word : words) {
-            for(Character letter : word.toCharArray()) {
-                set.add(letter);
-            }
-        }
-
-        // 2.
-        Map<Integer, Character> indexMap = new HashMap<>();
-        Map<Character, Integer> charMap = new HashMap<>();
-
-        int indx = 0;
-        for(Character c : set) {
-            indexMap.put(indx, c);
-            charMap.put(c, indx);
-            indx++;
-        }
-
-        // 3.
-        int n = set.size();
-
-        List<List<Integer>> adjList = new ArrayList<>();
+        List<List<Node>> adjList = new ArrayList<>();
         for(int i = 0; i < n; i++) {
             adjList.add(new ArrayList<>());
         }
 
-        // 4.
-        for(int i = 1; i < words.length; i++) {
-            String word1 = words[i - 1];
-            String word2 = words[i];
+        for(int[] edge : edges) {
+            int source = edge[0];
+            int target = edge[1];
+            int weight = edge[2];
 
-            boolean hasFoundDiff = false;
-            for(int j = 0; j < Math.min(word1.length(), word2.length()); j++) {
-                char c1 = word1.charAt(j);
-                char c2 = word2.charAt(j);
+            adjList.get(source).add(new Node(target, weight));
+            adjList.get(target).add(new Node(source, weight));
+        }
 
-                if(c1 != c2) {
-                    hasFoundDiff = true;
-                    adjList.get(charMap.get(c1)).add(charMap.get(c2));
-                    break;
+        // 2.
+        Queue<List<Integer>> queue = new LinkedList<>(); // Each set inside the queue is a path
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+
+        distance[0] = 0;
+        List<Integer> firstSet = new ArrayList<>();
+        firstSet.add(0);
+        queue.add(firstSet);
+
+        Set<String> resultSet = new HashSet<>();
+
+        // 3.
+        while(!queue.isEmpty()) {
+            List<Integer> set = queue.poll();
+            int latestNode = set.get(set.size() - 1);
+
+            if(latestNode == n - 1) {
+                continue; // Whenever i found a target, i don't want to move forward
+            }
+
+            for(Node neighbor : adjList.get(latestNode)) {
+                int oldDistance = distance[neighbor.value];
+                int newDistance = distance[latestNode] + neighbor.weight;
+
+                if(newDistance <= oldDistance) {
+                    distance[neighbor.value] = newDistance;
+                    List<Integer> newSet = new ArrayList<>(set);
+                    newSet.add(neighbor.value);
+                    queue.add(newSet);
+
+
+                    if(neighbor.value == n - 1)  {
+                        if(newDistance < oldDistance) {
+                            resultSet.clear();
+                            addSet(resultSet, newSet);
+                        } else if (newDistance == oldDistance) {
+                            addSet(resultSet, newSet);
+                        }
+                    }
+
                 }
             }
+        }
 
-            if(!hasFoundDiff && word1.length() > word2.length()) {
-                return "";
+        System.out.println(resultSet);
+
+        boolean[] result = new boolean[edges.length];
+        for(int i = 0; i < edges.length; i++) {
+            String edge = edges[i][0] + "-" + edges[i][1];
+            String edgeRev = edges[i][1] + "-" + edges[i][0];
+            if(resultSet.contains(edge) || resultSet.contains(edgeRev)) {
+                result[i] = true;
             }
         }
 
-        // 5.
-        boolean[] visited = new boolean[adjList.size()];
-        boolean[] pathVisited = new boolean[adjList.size()];
-        String ans = "";
-
-        for(int node = 0; node < adjList.size(); node++) {
-            if(!visited[node]) {
-                ans += dfs(node, visited, pathVisited, adjList, indexMap, charMap);
-            }
-        }
-
-        if(ans.length() != set.size()) {
-            return "";
-        }
-
-        return new StringBuilder(ans).reverse().toString();
+        return result;
 
     }
 
-    public static String dfs(int node, boolean[] visited, boolean[] pathVisited, List<List<Integer>> adjList, Map<Integer, Character> indexMap, Map<Character, Integer> charMap) {
+    public void addSet(Set<String> resultSet, List<Integer> sourceSet) {
+        int n = sourceSet.size();
 
-        visited[node] = true;
-        pathVisited[node] = true;
-
-        String ans = "";
-        for(int neighbor : adjList.get(node)) {
-            if(!visited[neighbor]) {
-                ans += dfs(neighbor, visited, pathVisited, adjList, indexMap, charMap);
-            } else if (pathVisited[neighbor]) {
-                return "";
-            }
+        for(int i = 0; i <= n - 2; i++) {
+            String edge = sourceSet.get(i) + "-" + sourceSet.get(i + 1);
+            resultSet.add(edge);
         }
+    }
 
-        pathVisited[node] = false;
-        return indexMap.get(node) + ans;
+    class Node {
+        int value;
+        int weight;
 
+        public Node(int value, int weight) {
+            this.value = value;
+            this.weight = weight;
+        }
     }
 }

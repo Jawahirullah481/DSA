@@ -20,15 +20,12 @@ public class Problem25WordLadder2 {
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
 
         // 1.
-        Set<String> set = new HashSet<>();
-        for (int i = 0; i < wordList.size(); i++) {
-            set.add(wordList.get(i));
-        }
+        Set<String> set = new HashSet<>(wordList);
 
         Queue<ArrayList<String>> queue = new LinkedList<>();
-        ArrayList<String> list1 = new ArrayList<>();
-        list1.add(beginWord);
-        queue.add(list1);
+        ArrayList<String> firstList = new ArrayList<>();
+        firstList.add(beginWord);
+        queue.add(firstList);
 
         List<List<String>> ans = new ArrayList<>();
         boolean hasFound = false;
@@ -36,7 +33,7 @@ public class Problem25WordLadder2 {
         while (!queue.isEmpty()) {
 
             int size = queue.size();
-            List<String> usedOnLevel = new ArrayList<>();
+            Set<String> usedOnLevel = new HashSet<>();
 
             for (int i = 0; i < size; i++) {
                 ArrayList<String> list = queue.poll();
@@ -47,12 +44,15 @@ public class Problem25WordLadder2 {
                     hasFound = true;
                 }
 
-                if(hasFound == true) {
+                if(hasFound) {
                     continue;
                 }
 
                 for (int j = 0; j < word.length(); j++) {
                     for (char c = 'a'; c <= 'z'; c++) {
+
+                        if (word.charAt(j) == c) continue;
+
                         String nextWord = word.substring(0, j) + c + word.substring(j + 1);
                         if (set.contains(nextWord)) {
                             ArrayList<String> newList = new ArrayList<>(list);
