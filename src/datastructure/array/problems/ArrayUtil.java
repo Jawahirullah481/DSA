@@ -5,6 +5,23 @@ import java.util.Random;
 
 public class ArrayUtil {
 
+    /*
+
+        | Feature      | `Math.random()` | `Random` class                     |
+        | ------------ | --------------- | --------------------------------   |
+        | Type         | Static method   | Object-based                       |
+        | Return type  | Only `double`   | Multiple (`int`, `double`, etc.)   |
+        | Range        | 0.0 to < 1.0    | Customizable (e.g., 0–N)           |
+        | Seed control | ❌ Not available | ✅ Yes                            |
+        | Thread-safe  | ✅ Yes           | ❌ No                             |
+        | Flexibility  | ❌ Limited       | ✅ High                           |
+
+        Seed in Random class only determine the order of outputs provided when it is called again and again.
+        It doesn't affect the start range and end range
+
+
+     */
+
     public static int[] giveArray(int size) {
         int[] arr = new int[size];
         Random random = new Random(20);

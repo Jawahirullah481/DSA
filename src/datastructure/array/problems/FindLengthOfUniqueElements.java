@@ -6,6 +6,12 @@ import java.util.HashSet;
 
 public class FindLengthOfUniqueElements {
 
+    /*
+        We cannot make any Time Optimization in the problem.
+        Because, we need to visit each and every element of the array to find the unique elements.
+        We can only space optimize this.
+     */
+
     public static void main(String[] args) {
 
         // Find the length of unique elements in sorted array

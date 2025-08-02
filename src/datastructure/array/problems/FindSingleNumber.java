@@ -8,7 +8,7 @@ public class FindSingleNumber {
         NOTE :
         ======
         1. Whenever there are situation to find a single number, then try to use xor operator.
-        2. Becuase, duplicates numbers will cancelled out.
+        2. Because, duplicates numbers will cancelled out.
         3. In the missing number also, all the number and it's index gets cancelled out.
      */
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class FindSingleNumber {
         findSingleNumberBrute(arr);
 
         // Optimal (Space Complexity : O(1), Time Complexity : O(N)
-        findSinglenNumberOptimal(arr);
+        findSingleNumberOptimal(arr);
     }
 
     private static void findSingleNumberBrute(int[] arr) {
@@ -45,7 +45,7 @@ public class FindSingleNumber {
         System.out.println("Single Number is : " + singleNumber);
     }
 
-    public static void findSinglenNumberOptimal(int[] arr) {
+    public static void findSingleNumberOptimal(int[] arr) {
         int xor = 0;
         for(int i : arr) {
             xor ^= i;
