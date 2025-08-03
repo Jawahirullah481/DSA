@@ -17,6 +17,24 @@ public class NextPermutation {
             3. Then sort the rest of the remaining elements.
             4. If you don't find any dip, that means array is in desc order.
             5. There is not next permutation lexicographically. So, return the ascending order.
+
+            Example :
+            =========
+
+            num = 2 9 3 2 (Taj's last 4 number)
+            next permutation = 3 2 2 9, Because, After the number 2932 ,the next greater number is 3229
+
+            I found a dip at  2 <- 9.
+
+            Question : Why I am looking for a dip ?
+            Answer : Because, 3 > 2 and 9 > 3. They are already in descending order. I cannot get next permutation by only using these 3 digits.
+                     So, I need to include the prev digit to find next permutation.
+
+            So,
+            STEP 1 : What is the next greater number after 2. ==> 3.
+            STEP 2 : SWAP 2 and 3 ==> 3 9 2 2
+            STEP 3 : SORT rest of the numbers ==> 3 2 2 9
+
          */
 
         int[] arr = Arrays.copyOf(arr1, arr1.length);

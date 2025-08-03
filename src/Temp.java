@@ -3,11 +3,44 @@ import java.util.*;
 class Temp {
 
     public static void main(String[] args) {
-        Temp t = new Temp();
-        int[][] edges = {{3,5,4},{0,5,10},{1,0,2},{4,0,6},{2,3,5},{3,1,1},{4,2,2},{3,0,6},{5,2,7},{4,5,6},{0,2,9},{2,1,4}};
 
-        boolean[] answer = t.findAnswer(6, edges);
-        System.out.println(Arrays.toString(answer));
+        int[] nums = {0,1,2,3,4}, index = {0,1,2,2,1};
+
+        int[] target = new int[nums.length];
+        Arrays.fill(target, -1);
+
+        for(int i = 0; i < nums.length; i++) {
+            int number = nums[i];
+            int ind = index[i];
+
+            insert(target, number, ind);
+            System.out.println(Arrays.toString(target));
+
+        }
+
+        System.out.println(Arrays.toString(target));
+
+
+    }
+
+    // [0, 1, 2, -1, -1]
+
+    public static void insert(int[] target, int number, int index) {
+        if(target[index] == -1) {
+            target[index] = number;
+            return;
+        }
+
+        // right shift the array elements
+        int tempInd = index;
+        int tempNum = number;
+
+        while(tempNum != -1) {
+            int currentNumber = target[tempInd];
+            target[tempInd] = tempNum;
+            tempNum = currentNumber;
+            tempInd++;
+        }
     }
 
     public boolean[] findAnswer(int n, int[][] edges) {

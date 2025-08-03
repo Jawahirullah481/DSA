@@ -2,7 +2,7 @@ package datastructure.array.problems;
 
 import java.util.Arrays;
 
-public class LeadersInArray {
+public class    LeadersInArray {
     public static void main(String[] args) {
         int[] arr = {17,18,5,4,6,1};
         leadersInArray(arr);

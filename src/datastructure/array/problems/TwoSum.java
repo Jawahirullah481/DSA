@@ -59,6 +59,7 @@ public class TwoSum {
             if(sum == target) {
                 ind1 = left;
                 ind2 = right;
+                break;
             } else if(sum > target) {
                 right--;
             } else {
