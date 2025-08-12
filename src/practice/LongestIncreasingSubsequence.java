@@ -1,6 +1,9 @@
 package practice;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class LongestIncreasingSubsequence {
     public int lengthOfLIS(int[] nums) {
@@ -11,6 +14,21 @@ public class LongestIncreasingSubsequence {
         }
         int result = memoizationLength(nums, 0, -1, dp);
         return result;
+    }
+
+    // Optimal Solution
+    public int lengthOfLISOptimal(int[] nums) {
+        List<Integer> sub = new ArrayList<>();
+        for (int x : nums) {
+            int idx = Collections.binarySearch(sub, x);
+            if (idx < 0) idx = -(idx + 1); // position to replace
+            if (idx == sub.size()) {
+                sub.add(x);
+            } else {
+                sub.set(idx, x);
+            }
+        }
+        return sub.size();
     }
 
     private int recursiveLength(int[] nums, int index, int last) {

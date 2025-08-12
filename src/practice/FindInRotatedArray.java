@@ -26,26 +26,35 @@ public class FindInRotatedArray {
         // So, if nums[mid] > nums[start], we have to shrink start
         // Else, we have to shrink end
 
-        int start = 0;
-        int end = nums.length - 1;
+        int left = 0, right = nums.length - 1;
 
-        while(start < end) {
-            int mid = start + (end - start) / 2;
-            if(nums[start] == nums[mid]) {
-                if(nums[start] < nums[start + 1]) {
-                    start = start + 1;
-                } else {
-                    end = mid;
-                }
+        // If the array is not rotated
+        if (nums[left] <= nums[right]) {
+            return left;
+        }
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            // Check if mid is pivot
+            if (mid < right && nums[mid] > nums[mid + 1]) {
+                return mid + 1;
             }
-            if(nums[start] < nums[mid]) {
-                start = mid;
+
+            // Check if mid-1 is pivot
+            if (mid > left && nums[mid] < nums[mid - 1]) {
+                return mid;
+            }
+
+            // Decide which half to search
+            if (nums[mid] >= nums[left]) {
+                left = mid + 1; // Pivot is in right half
             } else {
-                end = mid - 1;
+                right = mid - 1; // Pivot is in left half
             }
         }
 
-        return start;
+        return -1; // Should not happen if array is rotated
     }
 
     int binarySearch(int[] nums, int start, int end, int target) {

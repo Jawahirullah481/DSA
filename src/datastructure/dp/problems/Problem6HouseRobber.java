@@ -70,4 +70,25 @@ public class Problem6HouseRobber {
         dp[index] = Math.max(theft, notTheft);
         return dp[index];
     }
+
+    public int robCircularHouseTabulation(int[] nums) {
+        int n = nums.length;
+
+        // Edge cases
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+
+        int[] dp = new int[n];
+
+        // Base cases
+        dp[n - 1] = nums[n - 1]; // Only one house to rob
+        dp[n - 2] = Math.max(nums[n - 2], nums[n - 1]); // Max of last two houses
+
+        // Fill dp table from n-3 to 0
+        for(int i = n - 3; i >= 0; i--) {
+            dp[i] = Math.max(nums[i] + dp[i + 2], dp[i + 1]);
+        }
+
+        return dp[0];
+    }
 }

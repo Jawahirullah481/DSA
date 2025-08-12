@@ -4,137 +4,74 @@ class Temp {
 
     public static void main(String[] args) {
 
-        int[] nums = {0,1,2,3,4}, index = {0,1,2,2,1};
+        int[][] arr = spiralMatrixIII(5, 6, 1, 4);
 
-        int[] target = new int[nums.length];
-        Arrays.fill(target, -1);
-
-        for(int i = 0; i < nums.length; i++) {
-            int number = nums[i];
-            int ind = index[i];
-
-            insert(target, number, ind);
-            System.out.println(Arrays.toString(target));
-
-        }
-
-        System.out.println(Arrays.toString(target));
-
-
-    }
-
-    // [0, 1, 2, -1, -1]
-
-    public static void insert(int[] target, int number, int index) {
-        if(target[index] == -1) {
-            target[index] = number;
-            return;
-        }
-
-        // right shift the array elements
-        int tempInd = index;
-        int tempNum = number;
-
-        while(tempNum != -1) {
-            int currentNumber = target[tempInd];
-            target[tempInd] = tempNum;
-            tempNum = currentNumber;
-            tempInd++;
+        for(int[] a : arr) {
+            System.out.println(Arrays.toString(a));
         }
     }
 
-    public boolean[] findAnswer(int n, int[][] edges) {
+    public static int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
         // 1.
-        List<List<Node>> adjList = new ArrayList<>();
-        for(int i = 0; i < n; i++) {
-            adjList.add(new ArrayList<>());
-        }
-
-        for(int[] edge : edges) {
-            int source = edge[0];
-            int target = edge[1];
-            int weight = edge[2];
-
-            adjList.get(source).add(new Node(target, weight));
-            adjList.get(target).add(new Node(source, weight));
-        }
+        int[][] matrix = new int[rows][cols];
 
         // 2.
-        Queue<List<Integer>> queue = new LinkedList<>(); // Each set inside the queue is a path
-        int[] distance = new int[n];
-        Arrays.fill(distance, Integer.MAX_VALUE);
-
-        distance[0] = 0;
-        List<Integer> firstSet = new ArrayList<>();
-        firstSet.add(0);
-        queue.add(firstSet);
-
-        Set<String> resultSet = new HashSet<>();
+        int left = cStart, right = cStart, top = rStart, bottom = rStart;
 
         // 3.
-        while(!queue.isEmpty()) {
-            List<Integer> set = queue.poll();
-            int latestNode = set.get(set.size() - 1);
+        boolean leftReached = false, rightReached = false, topReached = false, bottomReached = false;
 
-            if(latestNode == n - 1) {
-                continue; // Whenever i found a target, i don't want to move forward
+        // 4.
+        int count = 0;
+        int num = 1;
+        while(!leftReached || !rightReached || !topReached || !bottomReached) {
+
+            for(int i = left; i <= right && top >= 0 && i <= matrix[0].length - 1 && i >= 0; i++) {
+                matrix[top][i] = num++;
+                print(matrix);
+            }
+            right++;
+            if(right == matrix[0].length) {
+                rightReached = true;
             }
 
-            for(Node neighbor : adjList.get(latestNode)) {
-                int oldDistance = distance[neighbor.value];
-                int newDistance = distance[latestNode] + neighbor.weight;
-
-                if(newDistance <= oldDistance) {
-                    distance[neighbor.value] = newDistance;
-                    List<Integer> newSet = new ArrayList<>(set);
-                    newSet.add(neighbor.value);
-                    queue.add(newSet);
-
-
-                    if(neighbor.value == n - 1)  {
-                        if(newDistance < oldDistance) {
-                            resultSet.clear();
-                            addSet(resultSet, newSet);
-                        } else if (newDistance == oldDistance) {
-                            addSet(resultSet, newSet);
-                        }
-                    }
-
-                }
+            for(int i = top; i <= bottom && right <= matrix[0].length - 1 && i <= matrix.length - 1 && i >= 0; i++) {
+                matrix[i][right] = num++;
+                print(matrix);
             }
+            bottom++;
+            if(bottom == matrix.length) {
+                bottomReached = true;
+            }
+
+            for(int i = right; i >= left && bottom <= matrix.length - 1 && i >= 0 && i <= matrix[0].length - 1; i--) {
+                matrix[bottom][i] = num++;
+                print(matrix);
+            }
+            left--;
+            if(left == 0) {
+                leftReached = true;
+            }
+
+            for(int i = bottom; i >= top && left >= 0 && i >= 0 && i <= matrix.length - 1; i--) {
+                matrix[i][left] = num++;
+                print(matrix);
+            }
+            top--;
+            if(top == 0) {
+                topReached = true;
+            }
+
         }
 
-        System.out.println(resultSet);
-
-        boolean[] result = new boolean[edges.length];
-        for(int i = 0; i < edges.length; i++) {
-            String edge = edges[i][0] + "-" + edges[i][1];
-            String edgeRev = edges[i][1] + "-" + edges[i][0];
-            if(resultSet.contains(edge) || resultSet.contains(edgeRev)) {
-                result[i] = true;
-            }
-        }
-
-        return result;
-
+        return matrix;
     }
 
-    public void addSet(Set<String> resultSet, List<Integer> sourceSet) {
-        int n = sourceSet.size();
-
-        for(int i = 0; i <= n - 2; i++) {
-            String edge = sourceSet.get(i) + "-" + sourceSet.get(i + 1);
-            resultSet.add(edge);
+    public static void print(int[][] arr) {
+        for(int[] a : arr) {
+            System.out.println(Arrays.toString(a));
         }
-    }
 
-    class Node {
-        int value;
-        int weight;
-
-        public Node(int value, int weight) {
-            this.value = value;
-            this.weight = weight;
-        }
+        System.out.println("\n");
     }
 }
