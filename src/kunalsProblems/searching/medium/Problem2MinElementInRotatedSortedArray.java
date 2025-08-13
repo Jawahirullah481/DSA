@@ -2,6 +2,10 @@ package kunalsProblems.searching.medium;
 
 public class Problem2MinElementInRotatedSortedArray {
 
+    /*
+        LeetCode No : 153, Problem Link : https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/git
+     */
+
     public int findMin(int[] nums) {
         int pivot = nums[0] <= nums[nums.length - 1] ? nums.length - 1 : findPivot(nums);
 
