@@ -13,3 +13,123 @@
 
 3. In array rotation problems, if it is n x n array, you can definitely swap 2 numbers.
    But, if it is m x n array, number of rows and column will differ for current array and rotated array. So, you shouldn't swap. You have to traverse each element one by one.
+
+# 4.  Bound and Upper Bound (Binary Search)
+
+When working with sorted arrays, **lower bound** and **upper bound** are common concepts to find insertion points for a target value.
+
+---
+
+## ✅ Lower Bound (Inclusive of Target)
+
+- Finds the **first index `i`** where `arr[i] >= target`.
+- Think of it as:  
+  **"Where can I place `target` without breaking the sorted order, on the leftmost side?"**
+
+### Example:
+```text
+arr = [1, 3, 3, 5], target = 3
+lower_bound(3) = index 1 (first 3)
+```
+
+---
+
+## ✅ Upper Bound (Exclusive of Target)
+
+- Finds the **first index `i`** where `arr[i] > target`.
+- Think of it as:  
+  **"Where can I place `target` if I want to go after all equal elements?"**
+
+### Example:
+```text
+arr = [1, 3, 3, 5], target = 3
+upper_bound(3) = index 3 (element 5)
+```
+
+---
+
+### Example of all methods:
+```java
+import java.util.Arrays;
+
+public class FloorCeilFinder {
+
+    // ✅ Lower Bound (Inclusive) -> first index where arr[i] >= target
+    public static int lowerBound(int[] arr, int target) {
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return low; // insertion index
+    }
+
+    // ✅ Upper Bound (Exclusive) -> first index where arr[i] > target
+    public static int upperBound(int[] arr, int target) {
+        int low = 0, high = arr.length;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] <= target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return low; // insertion index
+    }
+
+    // ✅ Floor (Inclusive) -> greatest element <= target
+    public static int floorInclusive(int[] arr, int target) {
+       int idx = upperBound(arr, target);
+       return (idx > 0) ? arr[idx - 1] : -1; // -1 if no floor exists
+    }
+
+    // ✅ Floor (Exclusive) -> greatest element < target
+    public static int floorExclusive(int[] arr, int target) {
+        int idx = lowerBound(arr, target);
+        return (idx > 0) ? arr[idx - 1] : -1;
+    }
+
+    // ✅ Ceil (Inclusive) -> smallest element >= target
+    public static int ceilInclusive(int[] arr, int target) {
+        int idx = lowerBound(arr, target);
+        return (idx < arr.length) ? arr[idx] : -1;
+    }
+
+    // ✅ Ceil (Exclusive) -> smallest element > target
+    public static int ceilExclusive(int[] arr, int target) {
+        int idx = upperBound(arr, target);
+        return (idx < arr.length) ? arr[idx] : -1;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 3, 3, 5, 7, 9};
+        int target = 3;
+
+        System.out.println("Array: " + Arrays.toString(arr));
+        System.out.println("Target: " + target);
+
+        System.out.println("Lower Bound (inclusive): index = " + lowerBound(arr, target));
+        System.out.println("Upper Bound (exclusive): index = " + upperBound(arr, target));
+
+        System.out.println("Floor (inclusive): " + floorInclusive(arr, target));
+        System.out.println("Floor (exclusive): " + floorExclusive(arr, target));
+
+        System.out.println("Ceil (inclusive): " + ceilInclusive(arr, target));
+        System.out.println("Ceil (exclusive): " + ceilExclusive(arr, target));
+    }
+}
+
+```
+# Important Note :
+
+```text
+1. Lower Bound     -> Ceil Inclusive of Target
+2. Upper Bound     -> Ceil Exclusive of Target
+3. Floor Inclusive -> but opposite of lower bound in reverse
+4. Floor Exclusive -> opposite of upper bound in reverse
+```
