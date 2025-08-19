@@ -18,6 +18,8 @@
 
 When working with sorted arrays, **lower bound** and **upper bound** are common concepts to find insertion points for a target value.
 
+**NOTE** : *Upper/Lower* Bound doesn't mean *Ceil/Floor* of a number. You have to mind it
+
 ---
 
 ## ✅ Lower Bound (Inclusive of Target)
@@ -132,4 +134,9 @@ public class FloorCeilFinder {
 2. Upper Bound     -> Ceil Exclusive of Target
 3. Floor Inclusive -> but opposite of lower bound in reverse
 4. Floor Exclusive -> opposite of upper bound in reverse
+
+✅ Rule of thumb
+
+* If you’re searching for an index in a sorted array → use [low, high) and return low.
+* If you’re searching for the maximum/minimum value that satisfies a condition → use [low, high] and track ans.
 ```

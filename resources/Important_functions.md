@@ -26,5 +26,13 @@ map.put(1, "Two");
 map.replace(1, "One");
 ```
 
+### 4. `Arrays.sort(arr, comparator)`
+
+Sort the Array with custom order using lambda expression.
+
+```java
+int[][] arr = { {1, 100}, {2, 50}, {3, 65}, {4, 92} };
+Arrays.sort(arr, (a, b) -> arr[1] - arr[2]);
+```
 
 
