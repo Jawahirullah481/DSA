@@ -140,3 +140,45 @@ public class FloorCeilFinder {
 * If you’re searching for an index in a sorted array → use [low, high) and return low.
 * If you’re searching for the maximum/minimum value that satisfies a condition → use [low, high] and track ans.
 ```
+
+## 5. Ceiling Without Math.ceil (Efficient)
+
+We can compute the ceiling of a division without using `Math.ceil` by using this formula:
+
+ceil(a / b) = (a + b - 1) / b
+
+---
+
+## ✅ Example 1
+- **a = 10, b = 3**
+
+**Step 1:** Normal division  
+`10 / 3 = 3.33`
+
+**Step 2:** Apply ceiling  
+`ceil(3.33) = 4`
+
+**Step 3:** Using formula  
+`(10 + 3 - 1) / 3 = 12 / 3 = 4`
+
+✔ Both give the same result!
+
+---
+
+## ✅ Example 2
+- **a = 12, b = 3**
+
+**Step 1:** Normal division  
+`12 / 3 = 4`
+
+**Step 2:** Apply ceiling  
+`ceil(4) = 4`
+
+**Step 3:** Using formula  
+`(12 + 3 - 1) / 3 = 14 / 3 = 4`
+---
+
+### Why does this work?
+- Adding **(b - 1)** ensures that any remainder from the division "pushes" the result to the next integer, mimicking the ceiling effect.
+- If `a` is already divisible by `b`, the subtraction of **1** prevents overshooting to the next integer.
+
