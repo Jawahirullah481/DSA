@@ -5,7 +5,7 @@ public class Problem8FindPeakElement2 {
     /*
         LeetCode No : 1901, Problem Link : https://leetcode.com/problems/find-a-peak-element-ii/description/
 
-        Why solution 1 correction and solution 2 is wrong ?
+        Why solution 1 is correct and solution 2 is wrong ?
 
         🔴 Solution 2 approach (why it fails)
 
