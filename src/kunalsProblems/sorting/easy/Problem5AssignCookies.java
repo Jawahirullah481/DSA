@@ -1,0 +1,35 @@
+package kunalsProblems.sorting.easy;
+
+import java.util.Arrays;
+
+public class Problem5AssignCookies {
+
+    /*
+        LeetCode No : 455, Problem Link : https://leetcode.com/problems/assign-cookies/
+
+        Intution :
+        =========
+
+        We are counting the pair where g[i] <= s[j].
+     */
+
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);
+        Arrays.sort(s);
+
+        int i = 0, j = 0;
+        int count = 0;
+
+        while(i < g.length && j < s.length) {
+            if(g[i] <= s[j]) {
+                count++;
+                i++;
+                j++;
+            } else if (g[i] > s[j]) {
+                j++;
+            }
+        }
+
+        return count;
+    }
+}
