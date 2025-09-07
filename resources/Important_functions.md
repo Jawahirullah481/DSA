@@ -35,4 +35,14 @@ int[][] arr = { {1, 100}, {2, 50}, {3, 65}, {4, 92} };
 Arrays.sort(arr, (a, b) -> arr[1] - arr[2]);
 ```
 
+### 5. `Stream.boxed() and Stream.toArray(Integer[]::new)`
+
+Arrays.sort(arr, comparator) only works for Objects, not for primitive types.
+So, to convert primitive array into Object array, use below code
+
+```java
+int[] nums = { 1, 2, 3 };
+Integer[] boxed = Arrays.stream(nums).boxed().toArray(Integer[]::new);
+int[] unboxed = Arrays.stream(arr).mapToInt(Integer::intValue).toArray();
+```
 
