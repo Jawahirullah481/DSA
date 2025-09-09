@@ -1,54 +1,28 @@
-import java.util.*;
-
 class Temp {
 
     public static void main(String[] args) {
-        int[] nums = {1,0,-1,0,-2,2};
-        int target = 0;
+        int count = 1;
+        int num = 2;
 
-        System.out.println(fourSum(nums, target));
-    }
-
-    public static List<List<Integer>> fourSum(int[] nums, int target) {
-
-        Arrays.sort(nums);
-
-        List<List<Integer>> ans = new ArrayList<>();
-        int sum = 0;
-        int st = 0, end = 0;
-
-        // 1.
-        for (end = st; end <= 3; end++) {
-            sum += nums[end];
-        }
-        end--;
-
-        if (sum == target) {
-            ans.add(addList(nums, st, end));
-        }
-
-        while (end + 1 < nums.length) {
-
-            sum -= nums[st];
-            st++;
-            end++;
-            sum += nums[end];
-
-            if (sum == target && nums[st - 1] != nums[end]) {
-                ans.add(addList(nums, st, end));
+        while(count <= 26) {
+            if(isPrime(num)) {
+                System.out.print(num + ", ");
+                count++;
             }
+            num++;
         }
-
-        return ans;
     }
 
-    private static List<Integer> addList(int[] arr, int st, int end) {
-        List<Integer> list = new ArrayList<>();
+    public static boolean isPrime(int num) {
+        if(num == 2) return true;
+        if(num % 2 == 0) return false;
 
-        for (int i = st; i <= end; i++) {
-            list.add(arr[i]);
+        int x = num / 2;
+        while(x >= 2) {
+            if(num % x == 0) return false;
+            x--;
         }
 
-        return list;
+        return true;
     }
 }
