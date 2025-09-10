@@ -45,4 +45,40 @@ int[] nums = { 1, 2, 3 };
 Integer[] boxed = Arrays.stream(nums).boxed().toArray(Integer[]::new);
 int[] unboxed = Arrays.stream(arr).mapToInt(Integer::intValue).toArray();
 ```
+## String Replacement Methods in Java
 
+### 6. `replace`
+* Replaces all occurrences of the target char/char sequence (literal, not regex).
+
+**Example:**
+```java
+String s = "abcabc";
+System.out.println(s.replace("a", "x")); 
+// Output: xbcxbc   (all "a"s replaced)
+```
+
+### 7. `replaceFirst`
+* Replaces only the first occurrence, and the target is treated as a regex.
+
+**Example:**
+```java
+String s = "abcabc";
+System.out.println(s.replaceFirst("a", "x"));
+// Output: xbcabc   (only the first "a" replaced)
+```
+
+### 6. `replaceAll`
+* Replaces all occurrences, but the target is treated as a regex.
+
+**Example:**
+```java
+String s = "abcabc";
+System.out.println(s.replaceAll("a", "x"));
+// Output: xbcxbc   (all "a"s replaced, regex-based)
+```
+
+## ✅ Summary
+
+- `replace` → all, no regex
+- `replaceFirst` → first only, regex
+- `replaceAll` → all, regex  
