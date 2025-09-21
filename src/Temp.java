@@ -1,38 +1,44 @@
 class Temp {
 
     public static void main(String[] args) {
-        String str = reverse("jawahirullah");
-        System.out.println(str);
+        String str = "XXXXXLXXXX";
+        String res = "LXXXXXXXXX";
+
+        boolean ans = canTransform(str, res);
+        System.out.println(ans);
     }
 
-    private static String reverse(String str) {
-        int st = 0, end = str.length() - 1;
+    public static boolean canTransform(String start, String result) {
 
-        while(st < end) {
-            String str1 = str.substring(0, st);
-            String str2 = str.substring(st, st + 1);
-            String str3 = str.substring(st + 1, end - 1);
-            String str4 = str.substring(end, end + 1);
-            String str5 = str.substring(end + 1);
+        String str = start;
 
-            str = str1 + str4 + str3 + str2 + str5;
-            st++;
-            end--;
+        while(true) {
+
+            int swaps = 0;
+            for(int i = 0; i < start.length(); ) {
+                if(str.equals(result)) return true;
+
+                if(str.charAt(i) == result.charAt(i)) {
+                    i++;
+                } else if (i < start.length() - 1) {
+                    String sub1 = str.substring(i, i + 2);
+                    if(sub1.equals("XL") || sub1.equals("RX")) {
+                        String rev = sub1.equals("XL") ? "LX" : "XR";
+                        str = str.substring(0, i) + rev + str.substring(i + 2);
+                        i += 2;
+                        swaps++;
+                    } else {
+                        i++;
+                    }
+                } else {
+                    i++;
+                }
+            }
+
+            if(swaps == 0) break;
+
         }
 
-        return str;
-    }
-
-    public static boolean isPrime(int num) {
-        if(num == 2) return true;
-        if(num % 2 == 0) return false;
-
-        int x = num / 2;
-        while(x >= 2) {
-            if(num % x == 0) return false;
-            x--;
-        }
-
-        return true;
+        return str.equals(result);
     }
 }
