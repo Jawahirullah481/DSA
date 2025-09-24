@@ -106,3 +106,51 @@ nums[idx] = -nums[idx]
 - Find missing numbers (**LeetCode 448 – Find All Numbers Disappeared in an Array**).
 - Any time you need to **track visited elements without extra space**.
 
+---
+
+# 3. 📌 MODULO (10^9+7) Quick Guide
+
+## 🔑 The Constant
+final long MOD = 1_000_000_007;  // 10^9 + 7
+
+---
+
+## 🧠 Rule of Thumb
+👉 **“MOD after every MOVE.”**
+
+- **Addition** → `(a + b) % MOD`
+- **Multiplication** → `(a * b) % MOD`
+- **Subtraction** → `((a - b) % MOD + MOD) % MOD` *(to avoid negatives)*
+
+---
+
+## ✅ Common Patterns
+
+- **While accumulating sum**  
+  ans = (ans + val) % MOD;
+
+- **While multiplying**  
+  ans = (ans * val) % MOD;
+
+- **While subtracting**  
+  ans = ((a - b) % MOD + MOD) % MOD;
+
+---
+
+## ⚠️ Important Reminder
+
+👉 If the problem mentions **modulo (10^9 + 7)** →  
+that means answers can be very large, so **always use `long` instead of `int`**.
+
+---
+
+## 🔒 Why?
+
+- Keeps numbers in safe range (no overflow).
+- Ensures final result fits inside `int`/`long`.
+- Standard in competitive programming.
+
+---
+
+## 📝 One-Liner Reminder
+👉 **“When numbers grow, MOD is the pro. Use long, not int.”**
